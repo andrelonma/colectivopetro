@@ -17,13 +17,13 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" action="../php/login.php" method="POST">
       <img class="mb-4" src="http://www.ucp.edu.co/portal/wp-content/themes/UCatolica/images/logo.png" alt="">
       <h1 class="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
       <label for="inputEmail" class="sr-only">Usuario</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Usuarios" required autofocus>
+      <input type="email" name="username" class="form-control" placeholder="Usuarios" required autofocus>
       <label for="inputPassword" class="sr-only">Contraseña</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+      <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
    
       <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar</button>
     </form>
