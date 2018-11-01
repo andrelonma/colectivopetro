@@ -14,7 +14,7 @@
 
             $_SESSION['loggedin'] = true;
        
-            $_SESSION['username'] = $row['nombre'];
+            $_SESSION['username'] = $row['nombre_completo'];
        
             $_SESSION['start'] = time();
        
