@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Años agregados</span>
+            <span class="text-muted">Sucursales</span>
           </h4>
           <ul class="list-group mb-3" id="year-list">
           </ul>
@@ -48,8 +48,17 @@
                 </select>
               </div>
               <div class="col-md-6 mb-6">
-                <label for="zip">Cantidad de habitantes</label>
-                <input type="text" class="form-control" id="habs" placeholder="" required>
+                <label for="country">Sucursales</label>
+                <select class="custom-select d-block w-100" id="emp" required>
+                  <option value="">Seleccione una sucursal...</option>
+                  <option>Manizales</option>
+                  <option>Bogota</option>
+                  <option>Pereira</option>
+                </select>
+              </div>
+              <div class="col-md-12 mb-12 mt-3">
+                <label for="zip">Cantidad de ventas</label>
+                <input type="text" class="form-control" id="ventas" placeholder="" required>
               </div>
               <hr>
               <div class="col-md-12 mb-12 mt-3 ">
