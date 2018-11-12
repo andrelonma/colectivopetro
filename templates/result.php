@@ -20,11 +20,11 @@
 
     let list = []
     let data = {}
+
     $.ajax('../php/chart_api.php')
     .done(function(callback) {
       list.push(['Año', 'Ventas'])
       data = callback
-      console.log(data)
       $.each(callback, function(key, value){
         let item = JSON.parse(value)
         if (item.ano != "" && item.valor != ''){
@@ -33,7 +33,69 @@
       })
     })
 
-    console.log(data)
+    let city_keys = []
+    city_keys.push({nombre: 'Año', id: 'x'})
+    $.ajax('../php/sedes_list.php')
+        .done(function(callback) {
+        $.each(callback, function(key, value){
+          let item = JSON.parse(value)
+          city_keys.push(item)
+        })
+    })
+
+    setTimeout(() => {
+      $.each(city_keys, function(key, value){
+        $('#keys').append(`<th scope="col">${value.nombre}</th>`)
+      })
+
+      let data_result = []
+      let aready_user_year = []
+      $.each(data ,function(key_first, value_first){
+        let self = {}
+        let first_item = JSON.parse(value_first)
+        let valid = true           
+        
+        $.each(aready_user_year, function(key, value){
+          if (value == first_item.ano){
+            valid = false
+          }
+        })
+        
+        if (valid && first_item.ano != ''){
+          self['ano'] = first_item.ano
+          self[city_keys[Number(first_item.id_sede)+1].nombre] = first_item.valor
+          
+          $.each(data ,function(key_second, value_second){
+            let second_item = JSON.parse(value_second)
+            
+            if (first_item.ano == second_item.ano){
+              self[city_keys[Number(second_item.id_sede)+1].nombre] = second_item.valor
+            }
+          })
+          
+          aready_user_year.push(first_item.ano)
+          data_result.push(self)
+        }
+
+
+      })
+
+      let html = ''
+      $.each(data_result, function(key_data, value_date){
+        let html_content = '<tr>'
+        $.each(Object.keys(value_date), function(key_item, value_item){
+          if (key_item == 0){
+            html_content += `<th scope="row">${value_date[value_item]}</th>`
+          }else{
+            html_content += `<th>${value_date[value_item]}</th>`
+          }
+        })
+        html_content += '</tr>'
+        html+=html_content
+      })
+
+      $('#body_table').html(html)
+    }, 1000);
 
     function drawChart(){
         setTimeout(() => {
@@ -67,32 +129,10 @@
       <div class="row">
         <table class="table table-dark">
           <thead>
-            <tr>
-              <th scope="col">Año</th>
-              <th scope="col">Manizales</th>
-              <th scope="col">Bogota</th>
-              <th scope="col">Pereira</th>
+            <tr id='keys'>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">2015</th>
-              <td>1200000</td>
-              <td>130000</td>
-              <td>5000000</td>
-            </tr>
-            <tr>
-              <th scope="row">2012</th>
-              <td>120000</td>
-              <td>234000</td>
-              <td>2500000</td>
-            </tr>
-            <tr>
-              <th scope="row">2017</th>
-              <td>5000000</td>
-              <td>250000</td>
-              <td>670000</td>
-            </tr>
+          <tbody id='body_table'>
           </tbody>
         </table>
       </div>
