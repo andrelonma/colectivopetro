@@ -24,19 +24,15 @@ $(document).ready(function(){
                 <span class="text-muted">${emp}</span>
             </li>
         `)
-        console.log(year)
         let data = {
             year: year.getFullYear(),
             value: ventas,
             emp: emp
         }
 
-        console.log(data)
-
         $.ajax({
             type: "GET",
-            url: "../php/apeend_ventas.php",
-            data: {data}
+            url: `../php/apeend_ventas.php?year=${data.year}&value=${data.value}&emp=${data.emp}`,
         })
         .done(function(callback) {
         })

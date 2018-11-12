@@ -11,15 +11,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT id FROM registros";
-$result = $conn->query($sql);
-$id = $result['num_rows'];
-$request = $_GET['data'];
+$get_id = "SELECT id FROM registros";
+$result = $conn->query($get_id);
 
-$sql = "INSERT INTO  registros (id, ano, valor, id_usuario, id_sede )
-       VALUES ("+$id+", "+request['year']+", "+request['value']+", "+$_SESSION['id']+", "+request['emp']+")";
+$id = $result->num_rows;
+
+$request = $_GET;
+$sql = "INSERT INTO  registros (id, ano, valor, id_usuario, id_sede )  VALUES ('{$id}', '{$request['year']}', '{$request['value']}', '0', '{$request['emp']}')";
+
 if (mysqli_query($conn, $sql)){
-    echo "New record created successfully";
+    echo true;
 }else {
     echo "Error: " . $sql ."<br>" .mysqli_error($conn);
 }
