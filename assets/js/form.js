@@ -37,8 +37,6 @@ $(document).ready(function(){
         .done(function(callback) {
         })
 
-
-
         $('#ano').val('');
         $('#ventas').val('');
         $('#emp').val('');
@@ -46,6 +44,6 @@ $(document).ready(function(){
 
     $('#sennd').on('click', function(event){
         event.preventDefault()
-
+        window.location.href = './result.php'
     })
 })

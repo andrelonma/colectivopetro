@@ -1,34 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-    
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-              ['Año', 'Ventas'],
-              [ 2012,      100000],
-              [ 2013,      200000],
-              [ 2014,     350000],
-              [ 2015,      450000],
-              [ 2016,      563000],
-              [ 2017,     234000]
-            ]);
-    
-            var options = {
-              title: 'Grafico de dispersion de ventas por año',
-              hAxis: {title: 'Año'},
-              vAxis: {title: 'Ventas'},
-              legend: 'none'
-            };
-    
-            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-    
-            chart.draw(data, options);
-          }
-        </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -41,7 +13,44 @@
     <script src="../assets/js/jquery-3.3.1.min.js"></script>
     <script src="../assets/js/bootstrap.min.js" ></script>
     <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/form.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    let list = []
+    let data = {}
+    $.ajax('../php/chart_api.php')
+    .done(function(callback) {
+      list.push(['Año', 'Ventas'])
+      data = callback
+      console.log(data)
+      $.each(callback, function(key, value){
+        let item = JSON.parse(value)
+        if (item.ano != "" && item.valor != ''){
+          list.push([parseInt(item.ano), parseInt(item.valor)])
+        }
+      })
+    })
+
+    console.log(data)
+
+    function drawChart(){
+        setTimeout(() => {
+            var data = google.visualization.arrayToDataTable(list);
+            var options = {
+                title: 'Grafico de dispersion de ventas por año',
+                hAxis: {title: 'Año'},
+                vAxis: {title: 'Ventas'},
+                legend: 'none'
+            };
+            
+            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            
+            chart.draw(data, options);
+        }, 1000);
+    }
+  </script>
   </head>
 
   <body class="bg-light">
