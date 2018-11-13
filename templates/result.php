@@ -84,6 +84,26 @@
       $.each(data_result, function(key_data, value_date){
         let html_content = '<tr>'
         $.each(Object.keys(value_date), function(key_item, value_item){
+
+          let keys_empty = []
+          $.each(city_keys, function(key, value){
+            if (key > key_item){
+              keys_empty.push(value)
+              return false;
+            }
+          })
+
+          $.each(keys_empty, function(key, value){
+            if (value.nombre == 'Año'){
+              value.nombre = 'ano'
+            }
+            if (value_item == value.nombre){
+              return false;
+            }else{
+              html_content += `<th></th>`
+            }
+          })
+
           if (key_item == 0){
             html_content += `<th scope="row">${value_date[value_item]}</th>`
           }else{
