@@ -150,6 +150,7 @@
         <table class="table table-dark">
           <thead>
             <tr id='keys'>
+              <th></th>
             </tr>
           </thead>
           <tbody id='body_table'>
