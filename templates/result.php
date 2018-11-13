@@ -47,7 +47,7 @@
 
     setTimeout(() => {
       // recorriendo las llavas que se trajeron de la api
-      $.each(city_keys, function(key, value){
+      /* $.each(city_keys, function(key, value){
         $('#keys').append(`<th scope="col">${value.nombre}</th>`)
       })
 
@@ -84,9 +84,9 @@
         }
 
 
-      })
+      }) */
 
-      let html = ''
+      /* let html = ''
       // se recorren los datos de las consultas para poder mostrar las tablas de los datos
       $.each(data_result, function(key_data, value_date){
         let html_content = '<tr>'
@@ -96,7 +96,7 @@
           let keys_empty = []
           // se utilisa este ciclo para poder limpiar los valor que sean mayores que el que inicia
           $.each(city_keys, function(key, value){
-            if (key > key_item){
+            if (key => key_item){
               keys_empty.push(value)
               return false;
             }
@@ -113,6 +113,9 @@
               html_content += `<th></th>`
             }
           })
+
+          console.log(html_content)
+
           // si la llave es igual a 0 significa que es a inicial entonce se procede a añadir un atributo adicional
           if (key_item == 0){
             html_content += `<th scope="row">${value_date[value_item]}</th>`
@@ -125,8 +128,33 @@
       })
 
       // este es el que añade el html de a tabla
-      $('#body_table').html(html)
+      $('#body_table').html(html) */
       
+
+      $.each(data, function(key, value){
+        let item = JSON.parse(value)
+        let city = ''
+        $.each(city_keys, function(key, value){
+          if (key == item.id_sede){
+            city = value.nombre
+            return false
+          }
+        })
+        $('#body_table').append(`
+        <tr>
+          <th>
+            ${item.ano}
+          </th>
+          <th>
+            ${city}
+          </th>
+          <th>
+            ${item.valor}
+          </th>
+        </tr>
+        `)
+      })
+
       // se recorren cada un de las llaves de la ciudades para realizar calculos por ciudad
       $.each(city_keys, function(key_id, value_id){
         let calc_element = {
@@ -193,7 +221,7 @@
                 <td>${data.mid}</td>
               </tr>
               <tr>
-                <th scope="row">Variansa</th>
+                <th scope="row">Varianza</th>
                 <td>${data.vare}</td>
               </tr>
               <tr>
@@ -242,7 +270,9 @@
         <table class="table table-dark">
           <thead>
             <tr id='keys'>
-              <th></th>
+              <th>Año</th>
+              <th>Ciudad</th>
+              <th>Valor</th>
             </tr>
           </thead>
           <tbody id='body_table'>
