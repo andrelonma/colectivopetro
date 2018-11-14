@@ -29,13 +29,24 @@ $(document).ready(function(){
             value: ventas,
             emp: emp
         }
-
+        //alert(`../php/apeend_ventas.php?year=${data.year}&value=${data.value}&emp=${data.emp}`);
         $.ajax({
             type: "GET",
-            url: `../php/apeend_ventas.php?year=${data.year}&value=${data.value}&emp=${data.emp}`,
+            url: `../php/apeend_ventas.php?year=${data.year}&value=${data.value}&emp=${data.emp}`
         })
         .done(function(callback) {
+            //alert(callback);
         })
+        .fail(function(data){
+            //if(data.responseCode)
+            alert("fail:" + data.responseCode);
+        }
+        )
+        .always(function(){
+            //alert("Always");
+        }
+        )
+        ;
 
         $('#ano').val('');
         $('#ventas').val('');

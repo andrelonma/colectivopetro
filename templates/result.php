@@ -36,7 +36,7 @@
 
     //consumiendo la api de las sedes ººº para poder listar los datos de los contenidos 
     let city_keys = []
-    city_keys.push({nombre: 'Año', id: 'x'})
+    //city_keys.push({nombre: 'Año', id: 'x'})
     $.ajax('../php/sedes_list.php')
         .done(function(callback) {
         $.each(callback, function(key, value){
@@ -169,18 +169,23 @@
         // en esta variable se guardan solo los valores numericos que pertenezcan a valores
         let data_list = []
         let sum = 0 
+        let sum2 = 0
         // este es a funcion que suma todos los datos
         $.each(data, function(key, value){
           let item = JSON.parse(value)
           if (item.id_sede == key_id){
-            data_list.push(item.valor)
+            data_list.push(Number(item.valor))
             sum += Number(item.valor)
+            sum2 += Number(item.valor) * Number(item.valor)
           }
         })
         // estas son las ecuaciones para calcular los datos
-        calc_element.range = data_list[0] - data_list[data_list.length]
+        data_list.sort(function(a, b){return b-a})
+        calc_element.range = data_list[0] - data_list[data_list.length-1]
         calc_element.mid = sum / data_list.length
-        calc_element.var = (sum ** 2 / data_list.length) - ( calc_element.mid ** 2)
+        alert(sum2 + "-" + data_list.length + "-" + calc_element.mid)
+        calc_element.var = (sum2 / data_list.length) - ( calc_element.mid ** 2)
+        alert(calc_element.var)
         calc_element.des = Math.sqrt(calc_element.var)
 
         let asimetry = 0
@@ -193,6 +198,7 @@
         calc_element.range = calc_element.range.toFixed(2)
         calc_element.mid = calc_element.mid.toFixed(2)
         calc_element.var = calc_element.var.toFixed(2)
+        alert(calc_element.var)
         calc_element.des = calc_element.des.toFixed(2)
         calc_element.asi = calc_element.asi.toFixed(2)
 
@@ -222,7 +228,7 @@
               </tr>
               <tr>
                 <th scope="row">Varianza</th>
-                <td>${data.vare}</td>
+                <td>${data.var}</td>
               </tr>
               <tr>
                 <th scope="row">Desviacion tipica</th>
@@ -282,7 +288,8 @@
       <div id="content_ranges">
       </div>
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; Andrea</p>
+        <p class="mb-1">&copy; Andrea & Angelica</p>
+        
       </footer>
     </div>
 
