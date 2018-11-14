@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,19 +18,30 @@
     <script>
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawChart3);
 
     let list = []
+    let list1 = []
+    let list2 = []
     let data = {}
 
     // consumiendo datos de la api para la grafica ººº trallendo los datos de las ventas
     $.ajax('../php/chart_api.php')
     .done(function(callback) {
       list.push(['Año', 'Ventas'])
+      list1.push(['Año', 'Ventas'])
+      list2.push(['Año', 'Ventas'])
       data = callback
       $.each(callback, function(key, value){
         let item = JSON.parse(value)
         if (item.ano != "" && item.valor != ''){
-          list.push([parseInt(item.ano), parseInt(item.valor)])
+          if(item.id_sede == 0)
+            list.push([parseInt(item.ano), parseInt(item.valor)])
+          else if(item.id_sede == 1)
+            list1.push([parseInt(item.ano), parseInt(item.valor)])
+          else if(item.id_sede == 2)
+            list2.push([parseInt(item.ano), parseInt(item.valor)])
         }
       })
     })
@@ -183,9 +195,9 @@
         data_list.sort(function(a, b){return b-a})
         calc_element.range = data_list[0] - data_list[data_list.length-1]
         calc_element.mid = sum / data_list.length
-        alert(sum2 + "-" + data_list.length + "-" + calc_element.mid)
+        //alert(sum2 + "-" + data_list.length + "-" + calc_element.mid)
         calc_element.var = (sum2 / data_list.length) - ( calc_element.mid ** 2)
-        alert(calc_element.var)
+        //alert(calc_element.var)
         calc_element.des = Math.sqrt(calc_element.var)
 
         let asimetry = 0
@@ -198,7 +210,7 @@
         calc_element.range = calc_element.range.toFixed(2)
         calc_element.mid = calc_element.mid.toFixed(2)
         calc_element.var = calc_element.var.toFixed(2)
-        alert(calc_element.var)
+        //alert(calc_element.var)
         calc_element.des = calc_element.des.toFixed(2)
         calc_element.asi = calc_element.asi.toFixed(2)
 
@@ -258,6 +270,37 @@
             chart.draw(data, options);
         }, 1000);
     }
+
+    function drawChart2(){
+        setTimeout(() => {
+            var data = google.visualization.arrayToDataTable(list1);
+            var options = {
+                title: 'Grafico de dispersion de ventas por año',
+                hAxis: {title: 'Año'},
+                vAxis: {title: 'Ventas'},
+                legend: 'none'
+            };
+            
+            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div2'));
+            
+            chart.draw(data, options);
+        }, 1000);
+    }
+    function drawChart3(){
+        setTimeout(() => {
+            var data = google.visualization.arrayToDataTable(list2);
+            var options = {
+                title: 'Grafico de dispersion de ventas por año',
+                hAxis: {title: 'Año'},
+                vAxis: {title: 'Ventas'},
+                legend: 'none'
+            };
+            
+            var chart = new google.visualization.ScatterChart(document.getElementById('chart_div3'));
+            
+            chart.draw(data, options);
+        }, 1000);
+    }
   </script>
   </head>
 
@@ -272,6 +315,12 @@
       <div class="row">
             <div id="chart_div" style="width: 900px; height: 500px;"></div>
       </div>
+      <div class="row">
+            <div id="chart_div2" style="width: 900px; height: 500px;"></div>
+      </div>
+      <div class="row">
+            <div id="chart_div3" style="width: 900px; height: 500px;"></div>
+      </div>      
       <div class="row">
         <table class="table table-dark">
           <thead>
