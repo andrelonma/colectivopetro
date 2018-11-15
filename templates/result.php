@@ -259,7 +259,7 @@
         setTimeout(() => {
             var data = google.visualization.arrayToDataTable(list);
             var options = {
-                title: 'Grafico de dispersion de ventas por año',
+                title: 'Grafico de dispersion de ventas por año de la ciudad de Medellin',
                 hAxis: {title: 'Año'},
                 vAxis: {title: 'Ventas'},
                 legend: 'none'
@@ -275,7 +275,7 @@
         setTimeout(() => {
             var data = google.visualization.arrayToDataTable(list1);
             var options = {
-                title: 'Grafico de dispersion de ventas por año',
+                title: 'Grafico de dispersion de ventas por año de la ciudad de Bogota',
                 hAxis: {title: 'Año'},
                 vAxis: {title: 'Ventas'},
                 legend: 'none'
@@ -290,7 +290,7 @@
         setTimeout(() => {
             var data = google.visualization.arrayToDataTable(list2);
             var options = {
-                title: 'Grafico de dispersion de ventas por año',
+                title: 'Grafico de dispersion de ventas por año de la ciudad de Pereira',
                 hAxis: {title: 'Año'},
                 vAxis: {title: 'Ventas'},
                 legend: 'none'
@@ -310,7 +310,7 @@
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="http://www.ucp.edu.co/portal/wp-content/themes/UCatolica/images/logo.png" alt="">
         <h2>Resultado</h2>
-        <p class="lead">A continuacion se mostrara el resultado grafico.</p>
+        <p class="lead">A continuacion se mostrara el resultado grafico de ventas por año de cada ciudad.</p>
       </div>
       <div class="row">
             <div id="chart_div" style="width: 900px; height: 500px;"></div>
@@ -337,7 +337,7 @@
       <div id="content_ranges">
       </div>
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; Andrea & Angelica</p>
+        <p class="mb-1">&copy; Angelica Castañeda & Andrea Londoño</p>
         
       </footer>
     </div>
